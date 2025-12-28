@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gumpen skade og bilpleie</title>
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --border:rgba(15,23,42,.10);
+      --shadow2:0 10px 25px rgba(2,6,23,.06);
+      --radius:16px;
+      --primary:#2563eb;
+      --primary2:#1d4ed8;
+      --focus:0 0 0 4px rgba(37,99,235,.18);
+    }
+
+    *{box-sizing:border-box;}
+
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1100px 520px at 15% -10%, rgba(37,99,235,.10), transparent 60%),
+        radial-gradient(900px 420px at 90% 10%, rgba(16,185,129,.08), transparent 55%),
+        var(--bg);
+      margin:0;
+      padding:14px;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    h1{margin:0;font-size:22px;letter-spacing:.2px;}
+
+    /* Header fjernet – bruker vanlig overskrift */
+
+    .layout{display:grid;grid-template-columns:1fr;gap:14px;align-items:start;}
+
+    /* Topprad: ORDRE + MÅNEDER */
+    .topRow{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch;}
+    /* behold side-ved-side også på smalere skjermer */
+
+    .months{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+    @media (max-width:520px){.months{grid-template-columns:repeat(2,1fr);}}
+    .monthItem{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:12px;border:1px solid rgba(15,23,42,.10);background:rgba(248,250,252,.9);font-size:13px;font-weight:900;}
+    .monthItem span{color:var(--muted);font-weight:800;}
+
+    .card{
+      max-width:100%;
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:12px;
+      box-shadow:var(--shadow2);
+      border:1px solid var(--border);
+      backdrop-filter:saturate(1.1);
+    }
+
+    .card h2{white-space:nowrap;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#0b1220;opacity:.92;}
+
+    label{display:block;font-weight:800;margin-top:8px;font-size:11px;color:#0b1220;opacity:.86;}
+
+    input,select,textarea{
+      width:100%;
+      margin-top:4px;
+      padding:8px 10px;
+      border:1px solid rgba(15,23,42,.14);
+      border-radius:10px;
+      font-size:13px;
+      background:#fff;
+      color:var(--text);
+      transition: box-shadow .15s ease, border-color .15s ease, transform .06s ease;
+    }
+    input::placeholder, textarea::placeholder{color:rgba(100,116,139,.75);}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(37,99,235,.55);box-shadow:var(--focus);}
+    input:active,select:active,textarea:active{transform:translateY(.3px);}
+    textarea{resize:vertical;}
+
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+    button{
+      border:none;
+      border-radius:10px;
+      padding:8px 10px;
+      font-weight:900;
+      cursor:pointer;
+      background:linear-gradient(180deg, var(--primary), var(--primary2));
+      color:#fff;
+      box-shadow:0 10px 18px rgba(37,99,235,.20);
+      transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+    }
+    button:hover{filter:brightness(1.04);box-shadow:0 12px 22px rgba(37,99,235,.24);}
+    button:active{transform:translateY(1px);}
+
+    button.secondary{background:#0b1220;box-shadow:0 10px 18px rgba(2,6,23,.18);}
+    button.secondary:hover{filter:brightness(1.08);}
+
+    button.ghost{
+      background:rgba(15,23,42,.06);
+      color:#0b1220;
+      box-shadow:none;
+      border:1px solid rgba(15,23,42,.10);
+    }
+    button.ghost:hover{background:rgba(15,23,42,.08);}
+
+    .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+
+    .pill{
+      padding:6px 9px;
+      border-radius:999px;
+      background:rgba(37,99,235,.08);
+      color:#1d4ed8;
+      font-weight:900;
+      font-size:12px;
+      border:1px solid rgba(37,99,235,.10);
+    }
+    .pill.warn{background:rgba(245,158,11,.10);color:#92400e;border-color:rgba(245,158,11,.18);}
+    .pill.bad{background:rgba(239,68,68,.10);color:#991b1b;border-color:rgba(239,68,68,.18);}
+
+    .tableWrap{
+      overflow:auto;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow:0 1px 0 rgba(2,6,23,.04) inset;
+      background:#fff;
+    }
+
+    table{width:100%;border-collapse:separate;border-spacing:0;min-width:1050px;background:#fff;}
+    th,td{padding:9px 8px;border-bottom:1px solid rgba(15,23,42,.08);text-align:left;font-size:13px;vertical-align:top;}
+
+    th{
+      background:rgba(248,250,252,.92);
+      position:sticky;
+      top:0;
+      z-index:1;
+      font-weight:900;
+      color:#0b1220;
+      backdrop-filter: blur(6px);
+    }
+
+    tbody tr:hover{background:rgba(2,6,23,.02);}
+    tbody tr:nth-child(even){background:rgba(248,250,252,.45);}
+
+    .muted{color:var(--muted);}
+
+    .tag{display:inline-block;padding:4px 8px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid rgba(15,23,42,.06);}
+    .tag.ok{background:rgba(16,185,129,.10);color:#065f46;border-color:rgba(16,185,129,.18);}
+    .tag.soon{background:rgba(245,158,11,.12);color:#92400e;border-color:rgba(245,158,11,.20);}
+    .tag.over{background:rgba(239,68,68,.12);color:#991b1b;border-color:rgba(239,68,68,.20);}
+
+    .trashCol{text-align:right;white-space:nowrap;}
+    .trashBtn{
+      cursor:pointer;
+      font-size:16px;
+      line-height:1;
+      opacity:.82;
+      user-select:none;
+      background:transparent;
+      border:none;
+      padding:4px 6px;
+      border-radius:10px;
+      transition: transform .08s ease, opacity .12s ease, background .12s ease;
+    }
+    .trashBtn:hover{opacity:1;transform:translateY(-.3px);background:rgba(15,23,42,.06);}
+
+    .badge{padding:4px 8px;border-radius:999px;font-weight:900;font-size:12px;display:inline-block;border:1px solid rgba(15,23,42,.08);}
+    .badge-neutral{background:rgba(15,23,42,.06);color:#0b1220;}
+    .badge-sesongshine{background:rgba(14,165,233,.12);color:#075985;border-color:rgba(14,165,233,.20);}
+    .badge-gumpen-coating{background:rgba(124,58,237,.10);color:#4c1d95;border-color:rgba(124,58,237,.18);}
+    .badge-gumpen-ultra{background:rgba(245,158,11,.12);color:#92400e;border-color:rgba(245,158,11,.20);}
+    .badge-etterbehandling{background:rgba(34,197,94,.12);color:#166534;border-color:rgba(34,197,94,.20);}
+    .badge-other{background:rgba(148,163,184,.18);color:#334155;border-color:rgba(148,163,184,.28);}
+
+    .small{font-size:12px;color:var(--muted);}
+
+    /* Kontroller under månedoversikt */
+    .monthControls{margin-top:10px;padding-top:10px;border-top:1px solid rgba(15,23,42,.10);display:grid;grid-template-columns:1fr;gap:8px;}
+    .monthControls input,.monthControls select{min-width:0;width:100%;}
+    @media (min-width:900px){.monthControls{grid-template-columns:1fr 1fr;}
+      .monthControls .full{grid-column:1 / -1;}}
+    .monthControls label{margin-top:0;}
+    .rightTop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+    .lockhint{font-size:12px;color:var(--muted);margin-top:8px;}
+
+    /* Modal */
+    .overlay{position:fixed;inset:0;background:rgba(2,6,23,.58);display:none;align-items:flex-start;justify-content:center;padding:24px;z-index:200;}
+    .overlay.open{display:flex;}
+
+    .modal{
+      width:min(980px,100%);
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 28px 90px rgba(2,6,23,.30);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .modalHeader{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      padding:14px 16px;
+      background:linear-gradient(135deg, rgba(2,6,23,.96), rgba(2,6,23,.84));
+      color:#fff;
+    }
+    .modalHeader h3{margin:0;font-size:15px;letter-spacing:.2px;}
+    .modalHeader .sub2{margin:0;color:rgba(226,232,240,.85);font-size:12px;}
+
+    .closeBtn{
+      background:rgba(255,255,255,.12);
+      color:#fff;
+      border:none;
+      border-radius:12px;
+      padding:8px 10px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:none;
+    }
+    .closeBtn:hover{background:rgba(255,255,255,.16);}
+
+    .modalBody{padding:16px;display:grid;grid-template-columns:1.2fr .8fr;gap:14px;}
+    @media (max-width:900px){.modalBody{grid-template-columns:1fr;}}
+
+    .kv{display:grid;grid-template-columns:180px 1fr;gap:8px;align-items:center;font-size:13px;}
+    .kv div:first-child{color:var(--muted);font-weight:900;}
+
+    .hist{border:1px solid rgba(15,23,42,.10);border-radius:14px;overflow:hidden;background:#fff;}
+    .histHead{background:rgba(248,250,252,.92);padding:10px 12px;font-weight:900;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(15,23,42,.08);}
+    .histList{max-height:320px;overflow:auto;}
+
+    .histItem{padding:10px 12px;border-top:1px solid rgba(15,23,42,.08);display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:start;}
+    .histItem .line1{font-weight:900;}
+    .histItem .line2{color:var(--muted);font-size:12px;margin-top:2px;}
+
+    .histDel{background:rgba(239,68,68,.12);color:#991b1b;border:1px solid rgba(239,68,68,.18);border-radius:10px;padding:6px 9px;font-weight:900;cursor:pointer;font-size:12px;}
+    .histDel:hover{filter:brightness(1.03);}
+
+    .miniBtns{display:flex;gap:8px;flex-wrap:wrap;}
+    .miniBtns button{padding:8px 10px;border-radius:12px;font-weight:900;}
+
+    .callout{background:rgba(2,6,23,.04);border-radius:14px;padding:10px 12px;font-size:13px;color:var(--text);border:1px solid rgba(15,23,42,.08);}
+
+    .chk{display:flex;gap:10px;align-items:center;margin-top:10px;background:rgba(2,6,23,.04);border-radius:14px;padding:10px 12px;font-weight:900;border:1px solid rgba(15,23,42,.08);}
+    .chk input{width:auto;margin:0;}
+
+    .planTd{white-space:nowrap;}
+    .planBox{display:inline-flex;gap:8px;align-items:center;font-weight:900;font-size:12px;}
+    .planBox input{width:auto;margin:0;}
+
+    /* Smal ordre-boks */
+    .orderCard{max-width:760px;}
+    .orderHeader{display:flex;align-items:center;margin-bottom:8px;gap:12px;}
+  </style>
+</head>
+<body>
+
+<h1 style="margin:0 0 14px; font-size:22px; font-weight:1000;">Gumpen skade og bilpleie</h1>
+
+
+<div class="layout">
+
+  <div class="topRow">
+
+  <div class="card orderCard">
+    <div class="orderHeader">
+      <h2 style="margin:0;">ORDRE</h2>
+    </div>
+
+    <label>Reg.nr</label>
+    <input id="regnr" placeholder="AB12345" autocomplete="off" />
+
+    <label>Navn</label>
+    <input id="name" placeholder="Kunde / kontakt" autocomplete="off" />
+
+    <label>Telefon</label>
+    <input id="phone" placeholder="90000000" autocomplete="off" />
+
+    <div class="row">
+      <div>
+        <label>Dato</label>
+        <input id="date" type="date" />
+      </div>
+      <div>
+        <label>Poleringstype</label>
+        <select id="ptype">
+          <option value="">Velg...</option>
+          <option>1-stegs</option>
+          <option>2-stegs</option>
+          <option>3-stegs / heavy cut</option>
+          <option>Gumpen Sesongshine</option>
+          <option>Gumpen Coating</option>
+          <option>Gumpen Ultra</option>
+          <option>Etterbehandling</option>
+        </select>
+        <div class="lockhint" id="ptypeLockHint"></div>
+      </div>
+    </div>
+
+    <label>Notater</label>
+    <textarea id="notes" rows="3" placeholder="F.eks. felger, lakk, nar de kan kontaktes, osv."></textarea>
+
+    <div class="btns">
+      <button type="button" id="saveBtn">Legg til</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin:0 0 8px;">MÅNEDER</h2>
+    <div class="months" id="monthStats"></div>
+    <div class="small" style="margin-top:10px;">Antall biler med neste behandling i måneden.</div>
+
+    <div class="monthControls">
+      <input class="full" id="search" placeholder="Sok: regnr, navn, tlf, type..." />
+      <select id="filter">
+        <option value="all">Vis alle</option>
+        <option value="soon">Kun: forfaller snart</option>
+        <option value="over">Kun: forfalt</option>
+        <option value="ok">Kun: OK (ikke snart)</option>
+      </select>
+      <select id="monthFilter">
+        <option value="all" selected>Alle maneder</option>
+        <option value="0">Januar</option>
+        <option value="1">Februar</option>
+        <option value="2">Mars</option>
+        <option value="3">April</option>
+        <option value="4">Mai</option>
+        <option value="5">Juni</option>
+        <option value="6">Juli</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">Oktober</option>
+        <option value="10">November</option>
+        <option value="11">Desember</option>
+      </select>
+    </div>
+  </div>
+
+  </div>
+
+  <div class="card">
+    <div class="rightTop">
+      <div class="bar">
+        <span class="pill" id="countAll">0 totalt</span>
+        <span class="pill warn" id="countSoon">0 snart</span>
+        <span class="pill bad" id="countOver">0 forfalt</span>
+      </div>
+
+      
+    </div>
+
+    <div class="tableWrap" style="margin-top:10px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Planlagt</th>
+            <th>Reg.nr</th>
+            <th>Navn</th>
+            <th>Telefon</th>
+            <th>Siste besok</th>
+            <th>Type</th>
+            <th>Neste behandling</th>
+            <th>Dager igjen</th>
+            <th class="trashCol">Slett</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <p class="small" style="margin:10px 0 0;">Klikk en kunde for detaljer/historikk + nytt besok.</p>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modalHeader">
+      <div>
+        <h3 id="dTitle">Detaljer</h3>
+        <p class="sub2" id="dSubtitle">-</p>
+      </div>
+      <button type="button" class="closeBtn" id="closeModalBtn">Lukk</button>
+    </div>
+
+    <div class="modalBody">
+      <div>
+        <div class="callout" id="dSummary">-</div>
+        <div style="height:10px"></div>
+
+        <div class="hist">
+          <div class="histHead">
+            <span>Historikk (besok)</span>
+            <span class="muted" id="dHistCount">0</span>
+          </div>
+          <div class="histList" id="dHist"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="box-shadow:none;border:1px solid rgba(15,23,42,.10);">
+          <h3 style="margin:0 0 8px;">Neste behandling</h3>
+          <div class="kv">
+            <div>Type</div>
+            <div id="dType">-</div>
+            <div>Intervall</div>
+            <div id="dInterval">-</div>
+            <div>Auto forslag</div>
+            <div id="dAuto">-</div>
+          </div>
+
+          <label>Planlegg ny dato (overstyrer auto)</label>
+          <input id="dPlan" type="date" />
+
+          <div class="chk">
+            <input id="dPlannedOk" type="checkbox" />
+            <label for="dPlannedOk" style="margin:0;">Avtalt med kunde (planlagt)</label>
+          </div>
+
+          <div class="miniBtns" style="margin-top:10px;">
+            <button type="button" class="secondary" id="savePlanBtn">Lagre plan</button>
+            <button type="button" class="ghost" id="clearPlanBtn">Fjern plan</button>
+          </div>
+
+          <hr style="border:none;border-top:1px solid rgba(15,23,42,.10);margin:14px 0;">
+
+          <h3 style="margin:0 0 8px;">Legg til nytt besok</h3>
+          <label>Dato</label>
+          <input id="dNewDate" type="date" />
+
+          <label>Poleringstype</label>
+          <select id="dNewType">
+            <option value="">Bruk samme som sist</option>
+            <option>1-stegs</option>
+            <option>2-stegs</option>
+            <option>3-stegs / heavy cut</option>
+            <option>Gumpen Sesongshine</option>
+            <option>Gumpen Coating</option>
+            <option>Gumpen Ultra</option>
+            <option>Etterbehandling</option>
+          </select>
+
+          <label>Notater</label>
+          <textarea id="dNewNote" rows="2" placeholder="F.eks. rebehandling utfort, avtale osv."></textarea>
+          <div class="miniBtns" style="margin-top:10px;">
+            <button type="button" id="addVisitBtn">Legg til</button>
+          </div>
+          <p class="small" style="margin:10px 0 0;">Nytt besok oppdaterer historikk og neste behandling automatisk.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BEKREFT SLETT -->
+<div class="overlay" id="confirmOverlay" aria-hidden="true">
+  <div class="modal" style="width:min(520px,100%);">
+    <div class="modalHeader" style="background:linear-gradient(135deg, rgba(2,6,23,.94), rgba(2,6,23,.82));">
+      <div>
+        <h3 style="margin:0;" id="cTitle">Bekreft</h3>
+        <p class="sub2" style="margin:2px 0 0;" id="cMsg">-</p>
+      </div>
+      <button type="button" class="closeBtn" id="cCloseBtn">Lukk</button>
+    </div>
+    <div style="padding:16px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
+      <button type="button" class="ghost" id="cCancelBtn" style="background:rgba(15,23,42,.06);color:#0b1220;box-shadow:none;border:1px solid rgba(15,23,42,.10);">Avbryt</button>
+      <button type="button" id="cOkBtn" style="background:linear-gradient(180deg,#ef4444,#dc2626);box-shadow:0 10px 18px rgba(239,68,68,.22);">Slett</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var KEY = "polering_register_preview_clean_v4";
+  var data = load();
+  var detailsId = null;
+  var saveDotEl = document.getElementById("saveDot");
+  var saveTextEl = document.getElementById("saveText");
+  var saveWhenEl = document.getElementById("saveWhen");
+  var saveTimer = null;
+
+  function flashSaved(label){
+    if(!saveTextEl) return;
+    saveTextEl.textContent = label || "Lagret";
+    if(saveDotEl){
+      saveDotEl.classList.remove("pulse");
+      // restart animasjon
+      void saveDotEl.offsetWidth;
+      saveDotEl.classList.add("pulse");
+    }
+    if(saveWhenEl){
+      saveWhenEl.textContent = "• " + new Date().toLocaleTimeString("no-NO", {hour:"2-digit", minute:"2-digit"});
+    }
+    if(saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){
+      if(saveTextEl) saveTextEl.textContent = "Alt lagres automatisk";
+    }, 1200);
+  }
+
+  function uid(){
+    return "id_" + Math.random().toString(16).slice(2) + Date.now().toString(16);
+  }
+
+  function load(){
+    try{
+      var raw = JSON.parse(localStorage.getItem(KEY) || "[]");
+      return migrate(raw);
+    }catch(e){
+      return [];
+    }
+  }
+
+  function persist(){
+    localStorage.setItem(KEY, JSON.stringify(data));
+    flashSaved("Lagret");
+  }
+
+  function migrate(arr){
+    if(!Array.isArray(arr)) return [];
+    var out = [];
+    for(var i=0;i<arr.length;i++){
+      var x = arr[i];
+      if(!x) continue;
+      var nx = Object.assign({}, x);
+      var visits = Array.isArray(nx.visits) ? nx.visits : [];
+      nx.visits = visits.map(function(v){
+        var p = (v && v.ptype ? String(v.ptype) : "").trim();
+        var a = (v && v.after ? String(v.after) : "").trim();
+        return {
+          id: (v && v.id) ? String(v.id) : uid(),
+          date: v && v.date ? String(v.date) : "",
+          ptype: p || a || "",
+          notes: v && v.notes ? String(v.notes) : "",
+          at: v && v.at ? v.at : 0
+        };
+      });
+      if(typeof nx.duePaused !== "boolean") nx.duePaused = false;
+      if(typeof nx.plannedWithCustomer !== "boolean") nx.plannedWithCustomer = false;
+      out.push(nx);
+    }
+    return out;
+  }
+
+  function normalizeReg(s){
+    return String(s || "").toUpperCase().replace(/\s+/g, "").trim();
+  }
+
+  function normalizePhone(s){
+    var x = String(s || "");
+    var out = "";
+    for(var i=0;i<x.length;i++){
+      var ch = x[i];
+      var isDigit = ch >= "0" && ch <= "9";
+      if(isDigit || ch === "+") out += ch;
+    }
+    return out.trim();
+  }
+
+  function todayISO(){
+    var t = new Date();
+    var yyyy = t.getFullYear();
+    var mm = String(t.getMonth()+1).padStart(2, "0");
+    var dd = String(t.getDate()).padStart(2, "0");
+    return yyyy + "-" + mm + "-" + dd;
+  }
+
+  function fmtDate(dStr){
+    if(!dStr) return "";
+    var d = new Date(dStr + "T00:00:00");
+    return d.toLocaleDateString("no-NO");
+  }
+
+  function fmtDateTime(ts){
+    if(!ts) return "";
+    return new Date(ts).toLocaleString("no-NO");
+  }
+
+  function addMonthsISO(dateStr, months){
+    if(!dateStr) return "";
+    var d = new Date(dateStr + "T00:00:00");
+    d.setMonth(d.getMonth() + months);
+    var yyyy = d.getFullYear();
+    var mm = String(d.getMonth()+1).padStart(2, "0");
+    var dd = String(d.getDate()).padStart(2, "0");
+    return yyyy + "-" + mm + "-" + dd;
+  }
+
+  function intervalMonthsForType(ptype){
+    var t = String(ptype || "").toLowerCase().trim();
+    return (t.indexOf("sesongshine") !== -1) ? 6 : 12;
+  }
+
+  function nextTypeFor(ptype){
+    var t = String(ptype || "").toLowerCase().trim();
+    if(t.indexOf("gumpen coating") !== -1) return "Etterbehandling";
+    if(t.indexOf("gumpen ultra") !== -1) return "Etterbehandling";
+    return ptype || "";
+  }
+
+  function lastVisit(entry){
+    var v = (entry && Array.isArray(entry.visits)) ? entry.visits : [];
+    if(v.length === 0) return null;
+    var copy = v.slice();
+    copy.sort(function(a,b){ return String(b.date||"").localeCompare(String(a.date||"")); });
+    return copy[0];
+  }
+
+  function autoNextDue(entry){
+    var lv = lastVisit(entry);
+    if(!lv || !lv.date) return "";
+    return addMonthsISO(lv.date, intervalMonthsForType(lv.ptype));
+  }
+
+  function currentDue(entry){
+    if(entry && entry.duePaused) return "";
+    return (entry && entry.nextPlanned) ? entry.nextPlanned : autoNextDue(entry);
+  }
+
+  function daysBetween(fromStr, toStr){
+    if(!fromStr || !toStr) return null;
+    var a = new Date(fromStr + "T00:00:00").getTime();
+    var b = new Date(toStr + "T00:00:00").getTime();
+    return Math.round((b - a) / 86400000);
+  }
+
+  function statusFor(nextISO){
+    var t = todayISO();
+    var left = daysBetween(t, nextISO);
+    var soon = 60;
+    if(left === null) return { key:"ok", cls:"ok", days:0 };
+    if(left < 0) return { key:"over", cls:"over", days:left };
+    if(left <= soon) return { key:"soon", cls:"soon", days:left };
+    return { key:"ok", cls:"ok", days:left };
+  }
+
+  function typeClass(ptype){
+    var t = String(ptype || "").toLowerCase().trim();
+    if(t.indexOf("sesongshine") !== -1) return "badge-sesongshine";
+    if(t.indexOf("gumpen coating") !== -1) return "badge-gumpen-coating";
+    if(t.indexOf("gumpen ultra") !== -1) return "badge-gumpen-ultra";
+    if(t === "etterbehandling") return "badge-etterbehandling";
+    if(t.indexOf("stegs") !== -1 || t.indexOf("heavy") !== -1) return "badge-neutral";
+    return "badge-other";
+  }
+
+  function escHtml(s){
+    return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  function badgeType(ptype){
+    var v = String(ptype || "").trim();
+    if(!v) return '<span class="muted">-</span>';
+    return '<span class="badge ' + typeClass(v) + '">' + escHtml(v) + '</span>';
+  }
+
+  function $(id){ return document.getElementById(id); }
+
+  // Form
+  var regnr = $("regnr");
+  var name = $("name");
+  var phone = $("phone");
+  var date = $("date");
+  var ptype = $("ptype");
+  var notes = $("notes");
+  var ptypeLockHint = $("ptypeLockHint");
+  var saveBtn = $("saveBtn");
+
+  // List
+  var search = $("search");
+  var filter = $("filter");
+  var monthFilter = $("monthFilter");
+  var countAll = $("countAll");
+  var countSoon = $("countSoon");
+  var countOver = $("countOver");
+  var tbody = $("tbody");
+  var monthStats = $("monthStats");
+
+  // Modal
+  var overlay = $("overlay");
+  var closeModalBtn = $("closeModalBtn");
+  var dTitle = $("dTitle");
+  var dSubtitle = $("dSubtitle");
+  var dSummary = $("dSummary");
+  var dHist = $("dHist");
+  var dHistCount = $("dHistCount");
+  var dType = $("dType");
+  var dInterval = $("dInterval");
+  var dAuto = $("dAuto");
+  var dPlan = $("dPlan");
+  var dPlannedOk = $("dPlannedOk");
+  var savePlanBtn = $("savePlanBtn");
+  var clearPlanBtn = $("clearPlanBtn");
+  var dNewDate = $("dNewDate");
+  var dNewType = $("dNewType");
+  var dNewNote = $("dNewNote");
+  var addVisitBtn = $("addVisitBtn");
+
+  function setLocked(isLocked){
+    ptype.disabled = !!isLocked;
+    ptypeLockHint.textContent = isLocked ? "Type er last. Endring gjor du som nytt besok i detaljkortet." : "";
+  }
+
+  function clearForm(){
+    regnr.value = "";
+    name.value = "";
+    phone.value = "";
+    date.value = "";
+    ptype.value = "";
+    notes.value = "";
+    setLocked(false);
+    // tøm kladd
+    localStorage.removeItem(KEY + "_draft");
+  }
+
+  function saveEntry(){
+    // autosave kladd fjernes ved vellykket lagring
+    var r = normalizeReg(regnr.value);
+    var n = String(name.value || "").trim();
+    var p = normalizePhone(phone.value);
+    var d = date.value;
+    var t = String(ptype.value || "").trim();
+    var no = String(notes.value || "").trim();
+
+    if(!r){ alert("Legg inn reg.nr."); return; }
+    if(!d){ alert("Velg dato."); return; }
+
+    var now = Date.now();
+
+    var idx = -1;
+    for(var i=0;i<data.length;i++){
+      if(String(data[i].regnr||"") === r){ idx = i; break; }
+    }
+
+    if(idx === -1){
+      data.unshift({
+        id: uid(),
+        duePaused: false,
+        plannedWithCustomer: false,
+        regnr: r,
+        name: n,
+        phone: p,
+        visits: [{ id: uid(), date: d, ptype: t, notes: no, at: now }],
+        updatedAt: now
+      });
+    } else {
+      data[idx].name = n;
+      data[idx].phone = p;
+      var lv = lastVisit(data[idx]);
+      if(lv){
+        lv.date = d;
+        lv.ptype = t;
+        lv.notes = no;
+        lv.at = now;
+      } else {
+        data[idx].visits = [{ id: uid(), date: d, ptype: t, notes: no, at: now }];
+      }
+      data[idx].updatedAt = now;
+    }
+
+    persist();
+    render();
+    clearForm();
+  }
+
+  function togglePlanned(id, value){
+    for(var i=0;i<data.length;i++){
+      if(data[i].id === id){
+        if(!currentDue(data[i])) data[i].plannedWithCustomer = false;
+        else data[i].plannedWithCustomer = !!value;
+        data[i].updatedAt = Date.now();
+        break;
+      }
+    }
+    persist();
+    render();
+  }
+
+  function openDetails(id){
+    var entry = null;
+    for(var i=0;i<data.length;i++) if(data[i].id === id){ entry = data[i]; break; }
+    if(!entry) return;
+    detailsId = id;
+
+    var lv = lastVisit(entry);
+    var auto = autoNextDue(entry);
+    var suggestedType = lv ? nextTypeFor(lv.ptype) : "";
+    var due = currentDue(entry);
+    var months = lv ? intervalMonthsForType(suggestedType) : null;
+
+    dTitle.textContent = (entry.regnr + " - " + (entry.name || "")).trim();
+    dSubtitle.textContent = entry.phone ? ("Tlf: " + entry.phone) : "";
+
+    dType.innerHTML = badgeType(suggestedType);
+    dInterval.textContent = months ? (months + " mnd") : "-";
+    dAuto.textContent = auto ? fmtDate(auto) : "-";
+    dPlan.value = entry.nextPlanned || auto || "";
+    dPlannedOk.checked = !!(entry.nextPlanned && entry.plannedWithCustomer);
+
+    var lastTxt = (lv && lv.date) ? fmtDate(lv.date) : "-";
+    var nextTxt = due ? fmtDate(due) : "-";
+    var left = due ? daysBetween(todayISO(), due) : null;
+
+    dSummary.innerHTML =
+      '<div class="kv">'
+      + '<div>Siste besok</div><div><b>' + lastTxt + '</b></div>'
+      + '<div>Type</div><div>' + badgeType(lv ? lv.ptype : "") + '</div>'
+      + '<div>Neste behandling</div><div><b>' + nextTxt + '</b> ' + (left !== null ? '<span class="muted">(' + left + ' dager)</span>' : '') + '</div>'
+      + '<div>Planlagt?</div><div>' + (entry.nextPlanned ? ('Ja' + (entry.plannedWithCustomer ? ' (avtalt)' : '')) : (entry.duePaused ? 'Nei (tom til nytt besok)' : 'Nei (auto)')) + '</div>'
+      + '</div>';
+
+    var visits = Array.isArray(entry.visits) ? entry.visits.slice() : [];
+    visits.sort(function(a,b){ return String(b.date||"").localeCompare(String(a.date||"")); });
+
+    dHistCount.textContent = String(visits.length);
+
+    if(visits.length === 0){
+      dHist.innerHTML = '<div class="histItem"><div class="muted">Ingen historikk enna.</div><div></div><div></div></div>';
+    } else {
+      dHist.innerHTML = visits.map(function(v){
+        var note = v.notes ? escHtml(v.notes) : "-";
+        var when = v.at ? fmtDateTime(v.at) : "";
+        var vId = String(v.id || "");
+        return (
+          '<div class="histItem">'
+          + '<div>'
+          + '<div class="line1">' + fmtDate(v.date) + ' - ' + badgeType(v.ptype) + '</div>'
+          + '<div class="line2">' + note + '</div>'
+          + '</div>'
+          + '<div class="muted" style="font-size:12px;white-space:nowrap;">' + escHtml(when) + '</div>'
+          + '<button type="button" class="histDel" data-entry="' + entry.id + '" data-visit="' + vId + '">X</button>'
+          + '</div>'
+        );
+      }).join("");
+    }
+
+    dNewDate.value = todayISO();
+    dNewType.value = suggestedType || "";
+    dNewNote.value = "";
+
+    overlay.classList.add("open");
+  }
+
+  function closeDetails(){
+    overlay.classList.remove("open");
+    detailsId = null;
+  }
+
+  function savePlannedDate(){
+    if(!detailsId) return;
+    var entry = null;
+    for(var i=0;i<data.length;i++) if(data[i].id === detailsId){ entry = data[i]; break; }
+    if(!entry) return;
+
+    var v = dPlan.value;
+    if(!v){ alert("Velg en dato."); return; }
+
+    entry.nextPlanned = v;
+    entry.duePaused = false;
+    entry.plannedWithCustomer = !!dPlannedOk.checked;
+    entry.updatedAt = Date.now();
+
+    persist();
+    render();
+    openDetails(detailsId);
+  }
+
+  function clearPlannedDate(){
+    if(!detailsId) return;
+    var entry = null;
+    for(var i=0;i<data.length;i++) if(data[i].id === detailsId){ entry = data[i]; break; }
+    if(!entry) return;
+
+    delete entry.nextPlanned;
+    entry.plannedWithCustomer = false;
+    entry.updatedAt = Date.now();
+
+    persist();
+    render();
+    openDetails(detailsId);
+  }
+
+  function addVisitFromDetails(){
+    if(!detailsId) return;
+    var entry = null;
+    for(var i=0;i<data.length;i++) if(data[i].id === detailsId){ entry = data[i]; break; }
+    if(!entry) return;
+
+    var d = dNewDate.value;
+    if(!d){ alert("Velg dato for besoket."); return; }
+
+    var lv = lastVisit(entry);
+    var t = String(dNewType.value || nextTypeFor(lv ? lv.ptype : "") || "").trim();
+    var no = String(dNewNote.value || "").trim();
+
+    if(!Array.isArray(entry.visits)) entry.visits = [];
+    entry.visits.push({ id: uid(), date: d, ptype: t, notes: no, at: Date.now() });
+
+    delete entry.nextPlanned;
+    entry.plannedWithCustomer = false;
+    entry.duePaused = false;
+    entry.updatedAt = Date.now();
+
+    persist();
+    render();
+    openDetails(detailsId);
+  }
+
+  function isNewestVisit(entry, visitId){
+    var visits = (entry && Array.isArray(entry.visits)) ? entry.visits.slice() : [];
+    if(visits.length === 0) return false;
+    visits.sort(function(a,b){ return String(b.date||"").localeCompare(String(a.date||"")); });
+    return String(visits[0].id || "") === String(visitId || "");
+  }
+
+  function deleteVisit(entryId, visitId){
+    var entry = null;
+    for(var i=0;i<data.length;i++) if(data[i].id === entryId){ entry = data[i]; break; }
+    if(!entry || !Array.isArray(entry.visits)) return;
+
+    var exists = false;
+    for(var j=0;j<entry.visits.length;j++){
+      if(String(entry.visits[j].id||"") === String(visitId||"")){ exists = true; break; }
+    }
+    if(!exists) return;
+
+    confirmDialog("Slette denne historikklinjen?", function(){
+      var deletingNewest = isNewestVisit(entry, visitId);
+      entry.visits = entry.visits.filter(function(v){ return String(v.id||"") !== String(visitId||""); });
+      entry.updatedAt = Date.now();
+
+      if(deletingNewest || entry.visits.length === 0){
+        entry.duePaused = true;
+        delete entry.nextPlanned;
+        entry.plannedWithCustomer = false;
+      }
+
+      persist();
+      render();
+      openDetails(entryId);
+    });
+  }
+
+  function deleteRow(entryId){
+    confirmDialog("Slette hele linjen?", function(){
+      data = data.filter(function(row){ return row.id !== entryId; });
+      persist();
+      render();
+      if(detailsId === entryId) closeDetails();
+    });
+  }
+
+  function render(){
+    renderMonthStats();
+    var q = String(search.value || "").toLowerCase().trim();
+    var filt = filter.value;
+
+    tbody.innerHTML = "";
+
+    var soonCount = 0;
+    var overCount = 0;
+
+    for(var i=0;i<data.length;i++){
+      var due0 = currentDue(data[i]);
+      if(!due0) continue;
+      var st0 = statusFor(due0);
+      if(st0.key === "soon") soonCount++;
+      if(st0.key === "over") overCount++;
+    }
+
+    countAll.textContent = data.length + " totalt";
+    countSoon.textContent = soonCount + " snart";
+    countOver.textContent = overCount + " forfalt";
+
+    var rows = data.map(function(x){
+      var lv = lastVisit(x);
+      var due = currentDue(x);
+      var st = due ? statusFor(due) : { key:"ok", cls:"ok", days:null };
+      var planned = !!(x.nextPlanned && x.plannedWithCustomer);
+      return {
+        id: x.id,
+        regnr: x.regnr || "",
+        name: x.name || "",
+        phone: x.phone || "",
+        lastDate: lv ? (lv.date || "") : "",
+        lastType: lv ? (lv.ptype || "") : "",
+        lastNotes: lv ? (lv.notes || "") : "",
+        due: due,
+        nextPlanned: x.nextPlanned,
+        plannedWithCustomer: planned,
+        st: st
+      };
+    });
+
+    rows = rows.filter(function(x){
+      var hay = (x.regnr + " " + x.name + " " + x.phone + " " + x.lastType + " " + x.lastNotes).toLowerCase();
+      if(q && hay.indexOf(q) === -1) return false;
+      if(filt === "soon" && x.st.key !== "soon") return false;
+      if(filt === "over" && x.st.key !== "over") return false;
+      if(filt === "ok" && x.st.key !== "ok") return false;
+
+      var mf = monthFilter.value;
+      if(mf !== "all" && x.due){
+        var m = new Date(x.due + "T00:00:00").getMonth();
+        if(String(m) !== String(mf)) return false;
+      }
+      return true;
+    });
+
+    rows.sort(function(a,b){
+      function pri(k){ return (k === "over") ? 0 : (k === "soon" ? 1 : 2); }
+      var pa = pri(a.st.key);
+      var pb = pri(b.st.key);
+      if(pa !== pb) return pa - pb;
+      var da = (a.st.days === null || typeof a.st.days === "undefined") ? 999999 : a.st.days;
+      var db = (b.st.days === null || typeof b.st.days === "undefined") ? 999999 : b.st.days;
+      return da - db;
+    });
+
+    for(var k=0;k<rows.length;k++){
+      (function(x){
+        var tr = document.createElement("tr");
+        tr.style.cursor = "pointer";
+        tr.setAttribute("data-row", x.id);
+        // (delegert klikk i tbody)
+
+        var statusLabel = (x.st.key === "ok") ? "OK" : (x.st.key === "soon" ? "Snart" : "Forfalt");
+
+        var planCell = !x.due
+          ? '<span class="muted">-</span>'
+          : ('<span class="planBox">'
+              + '<input type="checkbox" ' + (x.plannedWithCustomer ? 'checked' : '') + ' data-plan="1" />'
+              + '<span>' + (x.plannedWithCustomer ? 'Avtalt' : '') + '</span>'
+            + '</span>');
+
+        // NB: Bruker kun &#128465; for å unngå token-feil i preview
+        var trashHtml = '<button type="button" class="trashBtn" data-id="' + x.id + '" title="Slett linje" aria-label="Slett linje">&#128465;</button>';
+
+        tr.innerHTML =
+          '<td><span class="tag ' + x.st.cls + '">' + statusLabel + '</span></td>'
+          + '<td class="planTd">' + planCell + '</td>'
+          + '<td><b>' + escHtml(x.regnr) + '</b></td>'
+          + '<td>' + (x.name ? escHtml(x.name) : '<span class="muted">-</span>') + '</td>'
+          + '<td>' + (x.phone ? escHtml(x.phone) : '<span class="muted">-</span>') + '</td>'
+          + '<td>' + (x.lastDate ? fmtDate(x.lastDate) : '<span class="muted">-</span>') + '</td>'
+          + '<td>' + badgeType(x.lastType) + '</td>'
+          + '<td>' + (x.due ? fmtDate(x.due) : '<span class="muted">-</span>') + (x.nextPlanned ? ' <span class="muted">(plan)</span>' : '') + '</td>'
+          + '<td>' + (x.due ? (String(x.st.days) + ' d') : '<span class="muted">-</span>') + '</td>'
+          + '<td class="trashCol">' + trashHtml + '</td>';
+
+        tbody.appendChild(tr);
+      })(rows[k]);
+    }
+
+    persist();
+  }
+
+  function renderMonthStats(){
+    if(!monthStats) return;
+    var names = ["Januar","Februar","Mars","April","Mai","Juni","Juli","August","September","Oktober","November","Desember"];
+    var counts = new Array(12);
+    for(var i=0;i<12;i++) counts[i] = 0;
+
+    for(var j=0;j<data.length;j++){
+      var due = currentDue(data[j]);
+      if(!due) continue;
+      var m = new Date(due + "T00:00:00").getMonth();
+      if(m >= 0 && m <= 11) counts[m]++;
+    }
+
+    var html = "";
+    for(var k=0;k<12;k++){
+      html += '<div class="monthItem">' + names[k] + '<span>' + counts[k] + '</span></div>';
+    }
+    monthStats.innerHTML = html;
+  }
+
+  // -------------------
+  // Mini-tester
+  // -------------------
+  function assertEq(actual, expected, msg){
+    if(actual !== expected){
+      throw new Error(msg + " (forventet " + expected + ", fikk " + actual + ")");
+    }
+  }
+
+  function runTests(){
+    assertEq(intervalMonthsForType("Gumpen Sesongshine"), 6, "Sesongshine intervall");
+    assertEq(intervalMonthsForType("Gumpen Ultra"), 12, "Ultra intervall");
+    assertEq(intervalMonthsForType("Etterbehandling"), 12, "Etterbehandling intervall");
+    assertEq(addMonthsISO("2025-01-15", 6), "2025-07-15", "Legg til 6 mnd");
+    var e = { visits:[{ id:"v", date:"2025-01-15", ptype:"Gumpen Sesongshine" }] };
+    assertEq(autoNextDue(e), "2025-07-15", "Auto neste sesongshine");
+  }
+
+  // Bekreft-dialog (egen modal, ikke window.confirm)
+  var confirmOverlay = $("confirmOverlay");
+  var cMsg = $("cMsg");
+  var cCloseBtn = $("cCloseBtn");
+  var cCancelBtn = $("cCancelBtn");
+  var cOkBtn = $("cOkBtn");
+  var pendingConfirm = null;
+
+  function openConfirm(){ confirmOverlay.classList.add("open"); confirmOverlay.setAttribute("aria-hidden","false"); }
+  function closeConfirm(){ confirmOverlay.classList.remove("open"); confirmOverlay.setAttribute("aria-hidden","true"); pendingConfirm = null; }
+
+  function confirmDialog(message, onOk){
+    cMsg.textContent = message;
+    pendingConfirm = onOk;
+    openConfirm();
+  }
+
+  cCloseBtn.addEventListener("click", closeConfirm);
+  cCancelBtn.addEventListener("click", closeConfirm);
+  confirmOverlay.addEventListener("click", function(e){
+    if(e.target === confirmOverlay) closeConfirm();
+  });
+  cOkBtn.addEventListener("click", function(){
+    var fn = pendingConfirm;
+    closeConfirm();
+    if(typeof fn === "function") fn();
+  });
+
+  // Autosave (kladd)
+  function saveDraft(){
+    var draft = {
+      regnr: regnr.value,
+      name: name.value,
+      phone: phone.value,
+      date: date.value,
+      ptype: ptype.value,
+      notes: notes.value
+    };
+    localStorage.setItem(KEY + "_draft", JSON.stringify(draft));
+  }
+
+  function loadDraft(){
+    try{
+      var d = JSON.parse(localStorage.getItem(KEY + "_draft") || "null");
+      if(!d) return;
+      regnr.value = d.regnr || "";
+      name.value = d.name || "";
+      phone.value = d.phone || "";
+      date.value = d.date || date.value || todayISO();
+      ptype.value = d.ptype || "";
+      notes.value = d.notes || "";
+    }catch(e){}
+  }
+
+  // Klikk-håndtering i tabellen (delegert)
+  tbody.addEventListener("click", function(ev){
+    // Slett (søppelbøtte)
+    var trash = ev.target.closest(".trashBtn");
+    if(trash){
+      ev.stopPropagation();
+      var id = trash.getAttribute("data-id");
+      if(id) deleteRow(id);
+      return;
+    }
+
+    // Planlagt-checkbox
+    var plan = ev.target.closest('input[data-plan="1"]');
+    if(plan){
+      ev.stopPropagation();
+      var tr0 = ev.target.closest('tr[data-row]');
+      if(!tr0) return;
+      var rowId = tr0.getAttribute('data-row');
+      togglePlanned(rowId, !!plan.checked);
+      return;
+    }
+
+    // Klikk på rad = åpne detaljer
+    var tr = ev.target.closest('tr[data-row]');
+    if(!tr) return;
+    var rid = tr.getAttribute('data-row');
+    if(rid) openDetails(rid);
+  });
+
+  // Historikk-slett i modal
+  dHist.addEventListener("click", function(e){
+    var btn = e.target.closest(".histDel");
+    if(!btn) return;
+    e.stopPropagation();
+    var entryId = btn.getAttribute("data-entry") || "";
+    var visitId = btn.getAttribute("data-visit") || "";
+    deleteVisit(entryId, visitId);
+  });
+
+  // Lukk modal ved klikk utenfor / knapp
+  overlay.addEventListener("click", function(e){
+    if(e.target === overlay) closeDetails();
+  });
+  closeModalBtn.addEventListener("click", closeDetails);
+
+  // Knapp-handlers
+  saveBtn.addEventListener("click", saveEntry);
+  savePlanBtn.addEventListener("click", savePlannedDate);
+  clearPlanBtn.addEventListener("click", clearPlannedDate);
+  addVisitBtn.addEventListener("click", addVisitFromDetails);
+
+  // Filtre
+  search.addEventListener("input", render);
+  filter.addEventListener("change", render);
+  monthFilter.addEventListener("change", render);
+
+  // Draft autosave
+  regnr.addEventListener("input", saveDraft);
+  name.addEventListener("input", saveDraft);
+  phone.addEventListener("input", saveDraft);
+  date.addEventListener("change", saveDraft);
+  ptype.addEventListener("change", saveDraft);
+  notes.addEventListener("input", saveDraft);
+
+  // ESC lukker overlays
+  window.addEventListener("keydown", function(e){
+    if(e.key !== "Escape") return;
+    if(confirmOverlay.classList.contains("open")) closeConfirm();
+    else if(overlay.classList.contains("open")) closeDetails();
+  });
+
+  // Init
+  try{ runTests(); }catch(err){ console.error(err); }
+
+  if(!date.value) date.value = todayISO();
+  if(!dNewDate.value) dNewDate.value = todayISO();
+  loadDraft();
+
+  renderMonthStats();
+  render();
+})();
+</script>
+
+</body>
+</html>
