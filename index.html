@@ -459,6 +459,47 @@
   }
 
 }
+/* 📱 Mobil: gjør tabellen mer lesbar (uten :has) */
+@media (max-width: 600px) {
+
+  /* Finn og overstyr tabell-regler hardt */
+  table{
+    width: 100% !important;
+    min-width: 0 !important;
+    border-collapse: separate !important;
+    border-spacing: 0 8px !important; /* luft mellom rader */
+    background: transparent !important;
+  }
+
+  thead{
+    display: none !important; /* skjul tabell-header på mobil */
+  }
+
+  tbody tr{
+    display: block !important;
+    background: #fff !important;
+    border: 1px solid rgba(0,0,0,.08) !important;
+    border-radius: 14px !important;
+    padding: 10px 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  tbody td{
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    padding: 6px 0 !important;
+    font-size: 14px !important;
+    white-space: normal !important;
+    border: 0 !important;
+  }
+
+  /* Hvis du har veldig mange kolonner: gjør teksten litt mindre */
+  tbody td:nth-child(n){
+    font-size: 13px !important;
+  }
+}
+body{ outline: 5px solid red !important; }
 }
 
   </style>
