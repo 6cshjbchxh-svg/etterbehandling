@@ -500,6 +500,53 @@
   }
 }
 body{ outline: 5px solid red !important; }
+/* =========================
+   MOBILFIX – påvirker IKKE PC
+   ========================= */
+@media (max-width: 600px){
+
+  /* Mindre luft generelt */
+  body{
+    padding: 8px;
+  }
+
+  .card{
+    padding: 10px;
+  }
+
+  /* ORDRE-felt mer kompakt */
+  input, select, textarea{
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  /* MÅNEDER: 2 kolonner + lavere høyde */
+  .months{
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px;
+  }
+
+  .monthItem{
+    padding: 6px 8px !important;
+    font-size: 13px;
+  }
+
+  /* TABELL: la den scrolle horisontalt */
+  .tableWrap,
+  table{
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
+
+  table th,
+  table td{
+    font-size: 12px;
+    padding: 6px;
+    white-space: nowrap;
+  }
+
+}
 }
 
   </style>
