@@ -270,6 +270,48 @@
     font-size: 13px !important;
   }
 }
+@media (max-width: 600px) {
+
+  /* --- MÅNEDER: kortere + 2 kolonner --- */
+  .months{
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 kolonner */
+    gap: 8px !important;
+  }
+
+  .monthItem{
+    padding: 6px 10px !important;   /* mindre høyde */
+    min-height: 0 !important;
+    border-radius: 12px !important;
+    align-items: center !important;
+  }
+
+  .monthItem span{
+    font-size: 12px !important;
+    line-height: 1.1 !important;
+  }
+
+  /* --- LISTE/TABELL: mer plass + mulig å scrolle sideveis --- */
+  .card{
+    max-width: 100% !important;
+  }
+
+  /* Hvis tabellen ligger inni en wrapper: gjør den scrollbar */
+  .table-wrap, .list-wrap, .tableContainer{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table{
+    width: 100% !important;
+    min-width: 520px !important; /* hindrer at kolonner blir for smale */
+  }
+
+  th, td{
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important; /* holder kolonner “tette” */
+  }
+}
 }
 
 @media (max-width: 600px) {
