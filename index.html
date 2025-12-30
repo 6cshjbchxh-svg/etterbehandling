@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gumpen skade og bilpleie</title>
+  <title>Gumpen skade & bilpleie</title>
   <style>
     :root{
       --bg:#f6f7fb;
@@ -254,6 +254,35 @@
     /* Smal ordre-boks */
     .orderCard{max-width:760px;}
     .orderHeader{display:flex;align-items:center;margin-bottom:8px;gap:12px;}
+    /* 📱 Mobiltilpasning */
+@media (max-width: 768px) {
+
+  body {
+    padding: 8px;
+  }
+
+  h1 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  input, select, textarea, button {
+    font-size: 16px; /* hindrer iPhone-zoom */
+  }
+
+  .grid,
+  .row,
+  .form-row {
+    grid-template-columns: 1fr !important;
+    flex-direction: column !important;
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+  }
+
+}
   </style>
 </head>
 <body>
