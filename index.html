@@ -44,7 +44,7 @@
     /* behold side-ved-side også på smalere skjermer */
 
     .months{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-    @media (max-width:520px){.months{grid-template-columns:repeat(2,1fr);}}
+    @media (max-width:600px){ .months{ grid-template-columns: 1fr !important; } }
     .monthItem{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:12px;border:1px solid rgba(15,23,42,.10);background:rgba(248,250,252,.9);font-size:13px;font-weight:900;}
     .monthItem span{color:var(--muted);font-weight:800;}
 
@@ -255,6 +255,23 @@
     .orderCard{max-width:760px;}
     .orderHeader{display:flex;align-items:center;margin-bottom:8px;gap:12px;}
     /* 📱 Mobiltilpasning */
+    /* 📱 Mobil: legg seksjoner under hverandre */
+@media (max-width: 600px) {
+  .topRow{
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  @media (max-width: 600px) {
+  .monthItem{
+    padding: 8px 10px !important;
+    border-radius: 12px !important;
+  }
+  .monthItem span{
+    font-size: 13px !important;
+  }
+}
+}
+
 @media (max-width: 600px) {
 
   body {
