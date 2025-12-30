@@ -417,6 +417,48 @@
 
   /* Litt mindre luft mellom seksjoner */
   .section, .divider, .block { margin-top: 10px !important; }
+  @media (max-width: 600px) {
+
+  /* ---- LISTA: gi den tyngde og plass ---- */
+
+  /* kortet rundt lista */
+  .card:has(table) {
+    padding: 12px !important;
+  }
+
+  /* selve tabellen */
+  table {
+    width: 100% !important;
+    min-width: 100% !important;
+    border-collapse: separate;
+    border-spacing: 0 6px; /* luft mellom rader */
+  }
+
+  /* header */
+  thead th {
+    font-size: 12px !important;
+    opacity: .8;
+  }
+
+  /* rader blir “kort” */
+  tbody tr {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.04);
+  }
+
+  td {
+    padding: 10px 8px !important;
+    font-size: 13px !important;
+    white-space: nowrap;
+  }
+
+  /* gjør lista høyere visuelt */
+  .card:has(table) {
+    min-height: 220px;
+  }
+
+}
 }
 
   </style>
