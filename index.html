@@ -255,7 +255,7 @@
     .orderCard{max-width:760px;}
     .orderHeader{display:flex;align-items:center;margin-bottom:8px;gap:12px;}
     /* 📱 Mobiltilpasning */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
 
   body {
     padding: 8px;
@@ -283,6 +283,83 @@
   }
 
 }
+/* 📱 Mobiltilpasning – strammere og mer jevnt */
+@media (max-width: 600px) {
+
+  body { padding: 8px; }
+
+  /* Strammere kort/rammer hvis du bruker "card"-stil */
+  .card, .panel, .box {
+    padding: 10px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Overskrift mindre + mindre luft */
+  h1 {
+    font-size: 18px !important;
+    line-height: 1.15 !important;
+    margin: 6px 0 10px !important;
+    text-align: left !important;
+  }
+
+  /* Jevnere label/tekst */
+  label, .label, .muted, small {
+    font-size: 13px !important;
+  }
+
+  /* Hindrer iPhone-zoom + mer jevn høyde */
+  input, select, textarea, button {
+    font-size: 16px !important;
+  }
+
+  input, select, textarea {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  textarea { min-height: 84px !important; }
+
+  /* Alt i én kolonne */
+  .grid,
+  .row,
+  .form-row,
+  .order-grid,
+  .topRow {
+    grid-template-columns: 1fr !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  /* “Legg til”-knappen: alltid lett å nå */
+  .primary-btn, .btn-primary, button[type="submit"], #addBtn {
+    width: 100% !important;
+    padding: 14px !important;
+    border-radius: 14px !important;
+    position: sticky !important;
+    bottom: 10px !important;
+    z-index: 50 !important;
+  }
+
+  /* Filter-knapper/teller: la dem wrappe pent */
+  .chips, .filters, .stats, .badges {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  /* Tabell/liste under: ingen rar klem, og scroll sideveis hvis nødvendig */
+  table { width: 100% !important; }
+  .table-wrap, .list-wrap, .tableContainer {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Litt mindre luft mellom seksjoner */
+  .section, .divider, .block { margin-top: 10px !important; }
+}
+
   </style>
 </head>
 <body>
