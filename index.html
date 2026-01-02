@@ -547,13 +547,839 @@ body{ outline: 5px solid red !important; }
   }
 
 }
+/* =========================
+   MODERN UI (kun styling)
+   ========================= */
+:root{
+  --bg: #f6f7fb;
+  --card: rgba(255,255,255,.9);
+  --border: rgba(15,23,42,.10);
+  --text: #0f172a;
+  --muted: rgba(15,23,42,.55);
+  --primary: #2563eb;
+  --primary2:#1d4ed8;
+  --shadow: 0 10px 30px rgba(2,6,23,.08);
+  --radius: 18px;
 }
 
-  </style>
+body{
+  background: radial-gradient(900px 420px at 90% 10%, rgba(37,99,235,.10), transparent 60%),
+              radial-gradient(1100px 520px at 15% -10%, rgba(16,185,129,.08), transparent 60%),
+              var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Overskrift */
+h1, h2, h3{
+  letter-spacing: .2px;
+}
+
+/* Kort */
+.card{
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Labels */
+label{
+  font-weight: 700 !important;
+  color: rgba(15,23,42,.75) !important;
+  font-size: 12px !important;
+  letter-spacing: .02em;
+}
+
+/* Inputs */
+input, select, textarea{
+  background: rgba(255,255,255,.95) !important;
+  border: 1px solid rgba(15,23,42,.12) !important;
+  border-radius: 14px !important;
+  padding: 10px 12px !important;
+  font-size: 14px !important;
+  color: var(--text) !important;
+  transition: box-shadow .15s ease, border-color .15s ease, transform .06s ease;
+}
+
+input::placeholder, textarea::placeholder{
+  color: rgba(100,116,139,.75) !important;
+}
+
+/* Fokus, så det føles moderne */
+input:focus, select:focus, textarea:focus{
+  outline: none !important;
+  border-color: rgba(37,99,235,.55) !important;
+  box-shadow: 0 0 0 4px rgba(37,99,235,.16) !important;
+}
+
+input:active, select:active, textarea:active{
+  transform: translateY(.3px);
+}
+
+/* Primærknapp (Legg til) */
+button, .btn, .primary{
+  background: linear-gradient(180deg, var(--primary), var(--primary2)) !important;
+  border: 1px solid rgba(2,6,23,.06) !important;
+  color: #fff !important;
+  border-radius: 16px !important;
+  padding: 12px 14px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px;
+  box-shadow: 0 10px 22px rgba(37,99,235,.22) !important;
+  transition: transform .08s ease, filter .15s ease;
+}
+
+button:hover{
+  filter: brightness(1.02);
+}
+button:active{
+  transform: translateY(1px);
+}
+
+/* MÅNEDER: litt mer “chips” */
+.monthItem{
+  background: rgba(248,250,252,.9) !important;
+  border: 1px solid rgba(15,23,42,.08) !important;
+  border-radius: 14px !important;
+}
+
+/* Små badges (totalt/snart/forfalt) */
+.badge, .pill, .chip{
+  border-radius: 999px !important;
+  border: 1px solid rgba(15,23,42,.10) !important;
+  background: rgba(255,255,255,.75) !important;
+}
+
+/* Tabell: luftigere og renere */
+table{
+  border-collapse: separate !important;
+  border-spacing: 0 8px !important;
+}
+thead th{
+  font-size: 12px !important;
+  color: rgba(15,23,42,.60) !important;
+}
+tbody tr{
+  background: rgba(255,255,255,.9) !important;
+  border: 1px solid rgba(15,23,42,.08) !important;
+  box-shadow: 0 8px 18px rgba(2,6,23,.06) !important;
+}
+tbody td{
+  padding: 10px 10px !important;
+}
+
+/* Litt mer luft mellom seksjoner */
+.topRow, .months, .card{
+  margin-bottom: 12px;
+}
+/* =========================
+   MODERN UI – PC + MOBIL
+   ========================= */
+
+/* Kort med mer dybde */
+.card{
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,.04);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.08),
+    0 2px 6px rgba(0,0,0,.04);
+}
+
+/* Labels – renere */
+label{
+  font-size: 12px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+/* Inputs – moderne */
+input,
+select,
+textarea{
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.12);
+  background: #f9fafb;
+  font-size: 14px;
+  padding: 10px 12px;
+}
+
+/* Fokus: tydelig, moderne */
+input:focus,
+select:focus,
+textarea:focus{
+  outline: none;
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37,99,235,.15);
+}
+
+/* Primærknapp */
+button,
+.btnPrimary{
+  border-radius: 14px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  box-shadow: 0 8px 20px rgba(37,99,235,.35);
+}
+
+/* Hover-følelse */
+button:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(37,99,235,.45);
+}
+/* MODERN UI */
+.card{
+  background:#fff !important;
+  border-radius:16px !important;
+  border:1px solid rgba(0,0,0,.06) !important;
+  box-shadow:0 10px 30px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04) !important;
+}
+
+label{
+  font-size:12px !important;
+  letter-spacing:.04em !important;
+  text-transform:uppercase !important;
+  color:#6b7280 !important;
+  font-weight:700 !important;
+}
+
+input, select, textarea{
+  border-radius:12px !important;
+  border:1px solid rgba(0,0,0,.12) !important;
+  background:#f9fafb !important;
+  font-size:14px !important;
+  padding:10px 12px !important;
+}
+
+input:focus, select:focus, textarea:focus{
+  outline:none !important;
+  border-color:#2563eb !important;
+  background:#fff !important;
+  box-shadow:0 0 0 4px rgba(37,99,235,.15) !important;
+}
+/* ========= MODERN UI (treffer alt) ========= */
+
+body{
+  background:#f6f7fb !important;
+  color:#0f172a !important;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Gir alt litt mer “app-luft” */
+main, .container, .wrap, .app{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Kort-følelse på bokser (hvis de har border) */
+.card, .panel, .box, .section, .orderCard, .listCard{
+  background:#fff !important;
+  border:1px solid rgba(2,6,23,.08) !important;
+  border-radius:16px !important;
+  box-shadow: 0 10px 26px rgba(2,6,23,.08) !important;
+}
+
+/* Labels ser mindre “skjema” ut */
+label{
+  font-size:12px !important;
+  letter-spacing:.06em !important;
+  text-transform: uppercase !important;
+  color: rgba(15,23,42,.65) !important;
+  font-weight: 700 !important;
+}
+
+/* Inputs: moderne */
+input, select, textarea{
+  width:100%;
+  border-radius:12px !important;
+  border:1px solid rgba(15,23,42,.14) !important;
+  background:#f9fafb !important;
+  padding:10px 12px !important;
+  font-size:14px !important;
+  transition: box-shadow .15s ease, border-color .15s ease, transform .06s ease;
+}
+
+/* Fokus: “web-app” */
+input:focus, select:focus, textarea:focus{
+  outline:none !important;
+  border-color: rgba(37,99,235,.75) !important;
+  background:#fff !important;
+  box-shadow: 0 0 0 4px rgba(37,99,235,.16) !important;
+}
+
+/* Knapper: moderne */
+button, input[type="button"], input[type="submit"]{
+  border:0 !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  font-weight:800 !important;
+  letter-spacing:.02em !important;
+  color:#fff !important;
+  background: linear-gradient(180deg, #2563eb, #1d4ed8) !important;
+  box-shadow: 0 10px 22px rgba(37,99,235,.28) !important;
+  transition: transform .08s ease, filter .15s ease;
+}
+
+button:active, input[type="button"]:active, input[type="submit"]:active{
+  transform: translateY(1px);
+}
+/* ===== MODERNE INPUTS – TREFFER RIKTIG ===== */
+
+.card input,
+.card select,
+.card textarea {
+  background: #f9fafb !important;
+  border: 1px solid rgba(15,23,42,.18) !important;
+  border-radius: 14px !important;
+  padding: 12px 14px !important;
+  font-size: 14px !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7) !important;
+  transition: border-color .15s ease, box-shadow .15s ease !important;
+}
+
+.card input:focus,
+.card select:focus,
+.card textarea:focus {
+  outline: none !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15) !important;
+  background: #fff !important;
+}
+
+:root{
+  --bg: #f6f7fb;
+  --card: rgba(255,255,255,.78);
+  --cardSolid: #ffffff;
+  --text: #0f172a;
+  --muted: rgba(15,23,42,.62);
+  --border: rgba(2,6,23,.10);
+  --border2: rgba(2,6,23,.14);
+  --shadow: 0 18px 50px rgba(2,6,23,.10);
+  --shadow2: 0 10px 26px rgba(2,6,23,.08);
+  --radius: 18px;
+  --radius2: 14px;
+  --primary: #2563eb;
+  --primary2: #1d4ed8;
+  --focus: 0 0 0 4px rgba(37,99,235,.18);
+}
+
+html, body{
+  background: radial-gradient(900px 520px at 18% -8%, rgba(37,99,235,.18), transparent 60%),
+              radial-gradient(900px 520px at 88% 10%, rgba(16,185,129,.14), transparent 60%),
+              var(--bg) !important;
+  color: var(--text) !important;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mer “app” følelse: litt større toppmargin/pust */
+body{
+  padding: 18px !important;
+}
+
+/* Tittel mer moderne */
+h1{
+  font-size: 24px !important;
+  letter-spacing: .2px !important;
+  margin: 6px 0 14px !important;
+}
+
+/* Kort generelt */
+.card,
+.orderCard,
+.section,
+.panel,
+.box{
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow2) !important;
+  backdrop-filter: blur(10px) saturate(1.15);
+}
+
+/* Litt strammere typografi på kort-overskrifter */
+.card h2{
+  font-size: 12px !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: rgba(15,23,42,.66) !important;
+}
+
+/* Labels: mindre “skjema”, mer “UI” */
+label{
+  font-size: 12px !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+  color: rgba(15,23,42,.62) !important;
+  font-weight: 700 !important;
+}
+
+/* Inputs: moderne, myke, med subtil dybde */
+input, select, textarea{
+  width: 100%;
+  background: rgba(255,255,255,.90) !important;
+  border: 1px solid var(--border2) !important;
+  border-radius: var(--radius2) !important;
+  padding: 10px 12px !important;
+  font-size: 14px !important;
+  color: var(--text) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.75);
+  transition: box-shadow .15s ease, border-color .15s ease, transform .06s ease;
+}
+
+input::placeholder, textarea::placeholder{
+  color: rgba(100,116,139,.78) !important;
+}
+
+input:focus, select:focus, textarea:focus{
+  outline: none !important;
+  border-color: rgba(37,99,235,.55) !important;
+  box-shadow: var(--focus) !important;
+}
+
+/* Knapper: mer “produkt”, mindre “standard html” */
+button,
+input[type="button"],
+input[type="submit"],
+a.button{
+  background: linear-gradient(180deg, var(--primary), var(--primary2)) !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  padding: 10px 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 10px 22px rgba(37,99,235,.28) !important;
+  transition: transform .08s ease, filter .15s ease, box-shadow .15s ease;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover{
+  filter: brightness(1.03) saturate(1.02) !important;
+}
+
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active{
+  transform: translateY(1px) !important;
+  box-shadow: 0 8px 18px rgba(37,99,235,.22) !important;
+}
+
+/* “Pills” / badges (OK / type-tags osv) */
+.badge,
+.pill,
+.tag,
+.typeBadge,
+.statusBadge{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px !important;
+  padding: 6px 10px !important;
+  font-weight: 800 !important;
+  border: 1px solid rgba(2,6,23,.08) !important;
+  background: rgba(255,255,255,.78) !important;
+}
+
+/* Månedsknappene/pillene: mer moderne */
+.monthItem{
+  background: rgba(255,255,255,.70) !important;
+  border: 1px solid rgba(2,6,23,.10) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 6px 18px rgba(2,6,23,.06) !important;
+  transition: transform .08s ease, box-shadow .15s ease;
+}
+.monthItem:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(2,6,23,.08) !important;
+}
+
+/* Tabell: renere, mindre “Excel”, mer webapp */
+table{
+  width: 100%;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: rgba(255,255,255,.65) !important;
+  border: 1px solid rgba(2,6,23,.10) !important;
+  border-radius: var(--radius) !important;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(2,6,23,.08) !important;
+}
+
+thead th{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: rgba(255,255,255,.90) !important;
+  color: rgba(15,23,42,.70) !important;
+  font-size: 12px !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+  padding: 12px 12px !important;
+  border-bottom: 1px solid rgba(2,6,23,.10) !important;
+}
+
+tbody td{
+  padding: 12px 12px !important;
+  border-bottom: 1px solid rgba(2,6,23,.06) !important;
+  color: rgba(15,23,42,.92) !important;
+  font-size: 14px !important;
+}
+
+tbody tr:hover td{
+  background: rgba(37,99,235,.06) !important;
+}
+
+/* “Totals / snart / forfalt” knapper om de er vanlige buttons/inputs */
+.filters button,
+.filters .pill,
+.filters .badge{
+  background: rgba(255,255,255,.75) !important;
+}
+
+/* Desktop layout: litt mer luft */
+@media (min-width: 900px){
+  .topRow{
+    gap: 16px !important;
+  }
+  .card{
+    padding: 16px !important;
+  }
+}
+/* ===================== MODERN PC LOOK (DESKTOP) ===================== */
+/* Trygg: endrer kun utseende. Ingen JS/HTML-funksjon røres. */
+
+/* Bare på større skjermer */
+@media (min-width: 900px){
+
+  /* Litt mer “app” bakgrunn */
+  body{
+    background: radial-gradient(1200px 520px at 15% -10%, rgba(37,99,235,.18), transparent 60%),
+                radial-gradient(900px 420px at 90% 10%, rgba(16,185,129,.10), transparent 55%),
+                #f6f7fb !important;
+    color:#0f172a !important;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif !important;
+  }
+
+  /* Topp-tittel litt mer “produkt” */
+  h1, .title, header h1{
+    letter-spacing:.2px;
+    font-weight:800;
+  }
+
+  /* Gi hovedområdet en max-bredde og luft */
+  main, .container, .wrap, .app, #app{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 18px 18px 26px;
+  }
+
+  /* Kort-følelse (ramme, skygge, mykere) */
+  .card, .panel, .box, .section, .orderCard, .monthsCard, .tableCard{
+    background: rgba(255,255,255,.92) !important;
+    border: 1px solid rgba(2,6,23,.10) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 10px 30px rgba(2,6,23,.08) !important;
+    backdrop-filter: blur(10px) saturate(1.1);
+  }
+
+  /* Labels ser mindre “skjema” ut */
+  label{
+    font-size: 12px !important;
+    letter-spacing: .08em !important;
+    text-transform: uppercase !important;
+    color: rgba(15,23,42,.65) !important;
+    font-weight: 800 !important;
+  }
+
+  /* Input felt: runde, rene, litt større */
+  input, select, textarea{
+    border-radius: 12px !important;
+    border: 1px solid rgba(15,23,42,.14) !important;
+    background: #f9fafb !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7) !important;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .06s ease;
+  }
+  input:focus, select:focus, textarea:focus{
+    outline: none !important;
+    border-color: rgba(37,99,235,.55) !important;
+    box-shadow: 0 0 0 4px rgba(37,99,235,.15) !important;
+  }
+
+  /* Primær-knapp (Legg til) mer moderne */
+  button, input[type="button"], input[type="submit"]{
+    border-radius: 14px !important;
+    border: 1px solid rgba(2,6,23,.10) !important;
+    box-shadow: 0 10px 22px rgba(37,99,235,.18) !important;
+    transition: transform .08s ease, filter .15s ease;
+  }
+  button:hover, input[type="button"]:hover, input[type="submit"]:hover{
+    filter: brightness(1.02);
+  }
+  button:active, input[type="button"]:active, input[type="submit"]:active{
+    transform: translateY(1px);
+  }
+
+  /* “Pills” (2 totalt / 0 snart / 0 forfalt) mer polert */
+  .pill, .badge, .filtersBadge, .filters .badge{
+    border-radius: 999px !important;
+    border: 1px solid rgba(2,6,23,.10) !important;
+    background: rgba(255,255,255,.85) !important;
+    box-shadow: 0 6px 16px rgba(2,6,23,.06) !important;
+  }
+
+  /* Tabell: litt mer lesbar */
+  table{
+    border-collapse: separate !important;
+    border-spacing: 0 10px !important; /* “kort-rader” */
+  }
+  thead th{
+    font-size: 12px !important;
+    letter-spacing: .08em !important;
+    text-transform: uppercase !important;
+    color: rgba(15,23,42,.55) !important;
+  }
+  tbody tr{
+    background: rgba(255,255,255,.92) !important;
+    box-shadow: 0 10px 24px rgba(2,6,23,.06) !important;
+  }
+  tbody td{
+    border-top: 1px solid rgba(2,6,23,.08) !important;
+    border-bottom: 1px solid rgba(2,6,23,.08) !important;
+    padding: 10px 12px !important;
+  }
+  tbody td:first-child{
+    border-left: 1px solid rgba(2,6,23,.08) !important;
+    border-top-left-radius: 14px !important;
+    border-bottom-left-radius: 14px !important;
+  }
+  tbody td:last-child{
+    border-right: 1px solid rgba(2,6,23,.08) !important;
+    border-top-right-radius: 14px !important;
+    border-bottom-right-radius: 14px !important;
+  }
+}
+/* ===================== END MODERN PC LOOK ===================== */
+}
+
+  
+/* =========================
+   THEME TOGGLE (LIGHT/DARK)
+   Endrer kun styling
+   ========================= */
+.topTitle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  max-width: 1120px;
+  margin: 0 auto 14px;
+}
+.topTitle h1{
+  margin:0;
+  font-size:22px;
+  font-weight:1000;
+}
+.themeToggle{margin-left:auto; 
+  border:none;
+  border-radius:999px;
+  padding:10px 12px;
+  font-weight:900;
+  cursor:pointer;
+  background:rgba(15,23,42,.06);
+  color:#0b1220;
+  border:1px solid rgba(15,23,42,.10);
+  box-shadow:none;
+  white-space:nowrap;
+}
+.themeToggle:hover{background:rgba(15,23,42,.08);}
+.themeToggle:active{transform:translateY(1px);}
+
+/* Default (light) bruker eksisterende :root i fila */
+
+/* DARK THEME */
+/* Knapper/inputs generelt */
+
+
+/* Kort */
+
+/* Theme-knapp i dark */
+/* Pills */
+
+
+/* Months */
+
+/* TABELL: gjør den tydelig i dark */
+
+
+
+
+
+
+/* Tags */
+
+
+/* Modal / Historikk: fiks hvit på hvit */
+
+
+
+
+
+
+
+/* =========================
+   DARK THEME – SILVER / BLACK (PREMIUM)
+   (kun styling – ingen funksjon endres)
+   ========================= */
+
+body[data-theme="dark"]{
+  --bg:#0b0d10;
+  --card:#15181d;
+  --card2:#1c2026;
+  --text:#e6e8eb;
+  --muted:#a1a6ad;
+  --border:rgba(255,255,255,.08);
+  --shadow:0 20px 60px rgba(0,0,0,.55);
+  --accent:#9ca3af;
+  --accentStrong:#e5e7eb;
+  --focus:0 0 0 3px rgba(229,231,235,.25);
+
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(255,255,255,.04), transparent 60%),
+    radial-gradient(800px 400px at 90% 10%, rgba(255,255,255,.03), transparent 55%),
+    var(--bg) !important;
+  color:var(--text) !important;
+}
+
+/* Kort */
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .orderCard,
+body[data-theme="dark"] .modal,
+body[data-theme="dark"] .hist{
+  background: linear-gradient(180deg, var(--card), var(--card2)) !important;
+  border:1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+
+/* Overskrifter / labels */
+body[data-theme="dark"] h1,
+body[data-theme="dark"] h2,
+body[data-theme="dark"] h3{
+  color: var(--accentStrong) !important;
+}
+body[data-theme="dark"] label,
+body[data-theme="dark"] .muted,
+body[data-theme="dark"] .small{
+  color: var(--muted) !important;
+}
+
+/* Inputs */
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea{
+  background:#101317 !important;
+  color: var(--text) !important;
+  border:1px solid var(--border) !important;
+}
+body[data-theme="dark"] input::placeholder,
+body[data-theme="dark"] textarea::placeholder{
+  color:#7b8088 !important;
+}
+body[data-theme="dark"] input:focus,
+body[data-theme="dark"] select:focus,
+body[data-theme="dark"] textarea:focus{
+  outline:none !important;
+  border-color: rgba(229,231,235,.35) !important;
+  box-shadow: var(--focus) !important;
+}
+
+/* Knapper – sølv/grafitt */
+body[data-theme="dark"] button{
+  background: linear-gradient(180deg, #2a2f36, #1b1f25) !important;
+  color: var(--accentStrong) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,.35) !important;
+}
+body[data-theme="dark"] button:hover{
+  background: linear-gradient(180deg, #343a42, #20242b) !important;
+}
+body[data-theme="dark"] button.secondary{
+  background: linear-gradient(180deg, #141a24, #0b0d10) !important;
+}
+body[data-theme="dark"] button.ghost{
+  background: rgba(255,255,255,.06) !important;
+  color: var(--accentStrong) !important;
+}
+
+/* Pills / month items */
+body[data-theme="dark"] .pill{
+  background:#1b2026 !important;
+  color: var(--accentStrong) !important;
+  border:1px solid var(--border) !important;
+}
+body[data-theme="dark"] .monthItem{
+  background:#15181d !important;
+  border:1px solid var(--border) !important;
+}
+body[data-theme="dark"] .monthItem span{
+  color: var(--muted) !important;
+}
+
+/* Tabell – lesbar, premium */
+body[data-theme="dark"] .tableWrap{
+  background:#12151a !important;
+  border:1px solid var(--border) !important;
+}
+body[data-theme="dark"] table{
+  background: transparent !important;
+}
+body[data-theme="dark"] th{
+  background:#161a20 !important;
+  color: var(--muted) !important;
+  border-bottom:1px solid rgba(255,255,255,.10) !important;
+}
+body[data-theme="dark"] td{
+  color: var(--text) !important;
+  border-bottom:1px solid rgba(255,255,255,.08) !important;
+}
+body[data-theme="dark"] tbody tr:nth-child(even){
+  background: rgba(255,255,255,.03) !important;
+}
+body[data-theme="dark"] tbody tr:hover{
+  background: rgba(255,255,255,.05) !important;
+}
+
+/* Historikk-header (fikser hvit på hvit) */
+body[data-theme="dark"] .histHead,
+body[data-theme="dark"] .histHead *{
+  background:#161a20 !important;
+  color: var(--muted) !important;
+}
+
+/* Status */
+body[data-theme="dark"] .tag.ok{ background: rgba(34,197,94,.15) !important; color:#bbf7d0 !important; border-color: rgba(34,197,94,.22) !important; }
+body[data-theme="dark"] .tag.soon{ background: rgba(245,158,11,.18) !important; color:#fde68a !important; border-color: rgba(245,158,11,.26) !important; }
+body[data-theme="dark"] .tag.over{ background: rgba(239,68,68,.18) !important; color:#fecaca !important; border-color: rgba(239,68,68,.26) !important; }
+
+</style>
 </head>
 <body>
 
-<h1 style="margin:0 0 14px; font-size:22px; font-weight:1000;">Gumpen skade og bilpleie</h1>
+<div class="topTitle">
+  <h1>Gumpen skade og bilpleie</h1>
+  <button type="button" class="themeToggle" id="themeToggle" aria-label="Bytt tema">🌙 Dark</button>
+</div>
 
 
 <div class="layout">
@@ -1528,6 +2354,35 @@ body{ outline: 5px solid red !important; }
 
   renderMonthStats();
   render();
+})();
+</script>
+
+
+<script>
+(function(){
+  "use strict";
+  var THEME_KEY = "gumpen_theme_v1";
+  var btn = document.getElementById("themeToggle");
+  if(!btn) return;
+
+  function apply(theme){
+    document.body.setAttribute("data-theme", theme);
+    if(theme === "dark"){
+      btn.textContent = "☀️ Lys";
+    } else {
+      btn.textContent = "🌙 Dark";
+    }
+  }
+
+  var saved = localStorage.getItem(THEME_KEY) || "light";
+  apply(saved);
+
+  btn.addEventListener("click", function(){
+    var cur = document.body.getAttribute("data-theme") || "light";
+    var next = (cur === "dark") ? "light" : "dark";
+    localStorage.setItem(THEME_KEY, next);
+    apply(next);
+  });
 })();
 </script>
 
